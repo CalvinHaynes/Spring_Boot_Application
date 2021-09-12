@@ -6,86 +6,125 @@ import top.calvinhaynes.pojo.TableTest;
 import top.calvinhaynes.service.TableTestService;
 import top.calvinhaynes.utils.JsonResult;
 
+
 /**
- * Created with IntelliJ IDEA.
- * Description:Table 的 Controller
- * User: CalvinHaynes
- * Date: 2021-07-26
- * Time: 14:53
+ * 表测试控制器
+ *
+ * @author CalvinHaynes
+ * @date 2021 /09/06
  */
 @RestController
 @RequestMapping("/table")
 public class TableTestController {
-    //注入Service
-    @Autowired
-    private TableTestService tableTestService;
 
-    //新增表格信息接口
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
-    public JsonResult postTable(@RequestParam(value = "id")int id,
-                            @RequestParam(value = "name")String name,
-                            @RequestParam(value = "level")int level,
-                            @RequestParam(value = "create_time")String create_time,
-                            @RequestParam(value = "delete_flag")int delete_flag,
-                            @RequestParam(value = "extension")String extension){
+    private final TableTestService tableTestService;
+
+    /**
+     * 构造器注入service
+     *
+     * @param tableTestService 表测试服务
+     */
+    @Autowired
+    public TableTestController(TableTestService tableTestService) {
+        this.tableTestService = tableTestService;
+    }
+
+    /**
+     * 新增表格信息接口
+     *
+     * @param id         the id
+     * @param name       the name
+     * @param level      the level
+     * @param createTime the create time
+     * @param deleteFlag the delete flag
+     * @param extension  the extension
+     * @return the json result
+     */
+    @PostMapping("/add")
+    public JsonResult postTable(@RequestParam(value = "id") int id,
+                                @RequestParam(value = "name") String name,
+                                @RequestParam(value = "level") int level,
+                                @RequestParam(value = "create_time") String createTime,
+                                @RequestParam(value = "delete_flag") int deleteFlag,
+                                @RequestParam(value = "extension") String extension) {
         TableTest tableTest = new TableTest();
         tableTest.setId(id);
         tableTest.setName(name);
         tableTest.setLevel(level);
-        tableTest.setCreate_time(create_time);
-        tableTest.setDelete_flag(delete_flag);
+        tableTest.setCreate_time(createTime);
+        tableTest.setDelete_flag(deleteFlag);
         tableTest.setExtension(extension);
 
         int status = tableTestService.add(tableTest);
 
-        if(status==1){
+        if (status == 1) {
             return new JsonResult(status);
-        }else {
+        } else {
             return new JsonResult(0);
         }
     }
 
-    //更新表格信息接口
-    @RequestMapping(value = "update/{id}",method = RequestMethod.PUT)
-    public JsonResult updateTable(@PathVariable("id")int id,
-                              @RequestParam(value = "name")String name,
-                              @RequestParam(value = "level")int level,
-                              @RequestParam(value = "create_time")String create_time,
-                              @RequestParam(value = "delete_flag")int delete_flag,
-                              @RequestParam(value = "extension")String extension){
+    /**
+     * 更新表格信息接口
+     *
+     * @param id         the id
+     * @param name       the name
+     * @param level      the level
+     * @param createTime 创建时间
+     * @param deleteFlag 删除标记
+     * @param extension  the extension
+     * @return the json result
+     */
+    @PutMapping("update/{id}")
+    public JsonResult updateTable(@PathVariable("id") int id,
+                                  @RequestParam(value = "name") String name,
+                                  @RequestParam(value = "level") int level,
+                                  @RequestParam(value = "create_time") String createTime,
+                                  @RequestParam(value = "delete_flag") int deleteFlag,
+                                  @RequestParam(value = "extension") String extension) {
 
         TableTest tableTest = new TableTest();
         tableTest.setName(name);
         tableTest.setLevel(level);
-        tableTest.setCreate_time(create_time);
-        tableTest.setDelete_flag(delete_flag);
+        tableTest.setCreate_time(createTime);
+        tableTest.setDelete_flag(deleteFlag);
         tableTest.setExtension(extension);
         tableTest.setId(id);
 
         int status = tableTestService.update(tableTest);
 
-        if(status==1){
+        if (status == 1) {
             return new JsonResult(status);
-        }else {
+        } else {
             return new JsonResult(0);
         }
     }
 
-    //删除
-    @RequestMapping(value = "delete/{id}",method = RequestMethod.DELETE)
-    public JsonResult deleteTableById(@PathVariable("id") int id){
+    /**
+     * 删除表格信息接口
+     *
+     * @param id the id
+     * @return the json result
+     */
+    @DeleteMapping("delete/{id}")
+    public JsonResult deleteTableById(@PathVariable("id") int id) {
         int status = tableTestService.delete(id);
 
-        if(status==1){
+        if (status == 1) {
             return new JsonResult(status);
-        }else {
+        } else {
             return new JsonResult(0);
         }
     }
 
-    //查询
-    @RequestMapping(value = "query/{id}",method = RequestMethod.GET)
-    public Object getTableById(@PathVariable("id") int id){
-            return tableTestService.findTableById(id);
+    /**
+     * 查询表格信息接口
+     *
+     * @param id the id
+     * @return the table by id
+     */
+    @GetMapping("query/{id}")
+    public Object getTableById(@PathVariable("id") int id) {
+        return tableTestService.findTableById(id);
     }
 }

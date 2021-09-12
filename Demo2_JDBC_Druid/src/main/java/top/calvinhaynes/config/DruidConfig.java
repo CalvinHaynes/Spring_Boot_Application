@@ -11,18 +11,23 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * User: CalvinHaynes
- * Date: 2021-07-26
- * Time: 23:06
+ * Druid的配置
+ *
+ * @author CalvinHaynes
+ * @date 2021 /09/06
  */
 @Configuration
 public class DruidConfig {
 
-    //配置 Druid 监控管理后台的Servlet；
-    //内置 Servlet 容器时没有web.xml文件，所以使用 Spring Boot 的注册 Servlet 方式
+    /**
+     * 配置 Druid 监控管理后台的Servlet；
+     * 内置 Servlet 容器时没有web.xml文件，
+     * 所以使用 Spring Boot 的注册 Servlet 方式.
+     *
+     * @return the servlet registration bean
+     */
     @Bean
     public ServletRegistrationBean statViewServlet() {
         ServletRegistrationBean bean = new ServletRegistrationBean(new StatViewServlet(), "/druid/*");
@@ -46,7 +51,12 @@ public class DruidConfig {
     }
 
 
-    //配置 Druid 监控 之  web 监控的 filter
+    /**
+     * Web stat filter filter registration bean.
+     *
+     * @return the filter registration bean
+     */
+//配置 Druid 监控 之  web 监控的 filter
 //WebStatFilter：用于配置Web和Druid数据源之间的管理关联监控统计
     @Bean
     public FilterRegistrationBean webStatFilter() {

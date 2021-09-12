@@ -12,7 +12,7 @@ spring:
     #   数据源基本配置
     username: root
     password: 412523chx
-    driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/spring_boot_test
     type: com.alibaba.druid.pool.DruidDataSource
 

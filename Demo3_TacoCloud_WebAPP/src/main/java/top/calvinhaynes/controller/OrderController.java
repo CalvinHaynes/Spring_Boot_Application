@@ -23,15 +23,16 @@ import javax.validation.Valid;
 @RequestMapping("/orders")
 public class OrderController {
 
-    @GetMapping("/current")
+
     /*
-     * Method Description:  显示订单表单页面
+     * Method Description:  get请求显示订单表单视图页面
      *
      * @param: [model]
      * @return: java.lang.String
      * @author: CalvinHaynes
      * @date: 2021/7/29 17:22
      */
+    @GetMapping("/current")
     public String orderForm(Model model) {
         model.addAttribute("order", new Order());
         return "orderForm";
@@ -39,7 +40,7 @@ public class OrderController {
 
 
     /*
-     * Method Description:  提交表单
+     * Method Description:  填完订单之后的操作
      *
      * @param: [order, errors]
      * @return: java.lang.String
@@ -47,7 +48,7 @@ public class OrderController {
      * @date: 2021/7/29 17:21
      */
     @PostMapping
-    public String processOrder(@Valid Order order, Errors errors) {
+    public String processOrder(@Valid Order order, Errors errors) { //@Valid注解是检验用的
         if (errors.hasErrors()) {
             return "orderForm";
         }

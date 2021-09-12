@@ -9,46 +9,74 @@ import top.calvinhaynes.utils.JsonResult;
 
 import java.util.List;
 
+
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * User: CalvinHaynes
- * Date: 2021-07-26
- * Time: 14:33
+ * dao接口的实现类
+ *
+ * @author CalvinHaynes
+ * @date 2021 /09/07
  */
 @Repository
-public class TableTestDaoImpl implements TableTestDao{
+public class TableTestDaoImpl implements TableTestDao {
 
-    //注入JDBC
+    private final JdbcTemplate jdbcTemplate;
+
+    /**
+     * 构造器注入JDBC
+     *
+     * @param jdbcTemplate jdbc模板
+     */
     @Autowired
-    private JdbcTemplate jdbcTemplate;
+    public TableTestDaoImpl(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
-    //添加
+    /**
+     * 添加
+     *
+     * @param tableTest 表测试
+     * @return int
+     */
     @Override
     public int add(TableTest tableTest) {
-        return jdbcTemplate.update("insert into spring_boot_test.table_test(id, name, level, create_time, delete_flag, extension) values(?, ?, ?, ?, ?, ?)",tableTest.getId(),tableTest.getName(),tableTest.getLevel(),tableTest.getCreate_time(),tableTest.getDelete_flag(),tableTest.getExtension());
+        return jdbcTemplate.update("insert into spring_boot_test.table_test(id, name, level, create_time, delete_flag, extension) values(?, ?, ?, ?, ?, ?)", tableTest.getId(), tableTest.getName(), tableTest.getLevel(), tableTest.getCreate_time(), tableTest.getDelete_flag(), tableTest.getExtension());
     }
 
-    //更新
+    /**
+     * 更新
+     *
+     * @param tableTest 表测试
+     * @return int
+     */
     @Override
     public int update(TableTest tableTest) {
-        return jdbcTemplate.update("update spring_boot_test.table_test set name=? ,level=? ,create_time=? ,delete_flag=? ,extension=? where id=?",tableTest.getName(),tableTest.getLevel(),tableTest.getCreate_time(),tableTest.getDelete_flag(),tableTest.getExtension(),tableTest.getId());
+        return jdbcTemplate.update("update spring_boot_test.table_test set name=? ,level=? ,create_time=? ,delete_flag=? ,extension=? where id=?", tableTest.getName(), tableTest.getLevel(), tableTest.getCreate_time(), tableTest.getDelete_flag(), tableTest.getExtension(), tableTest.getId());
     }
 
-    //删除
+    /**
+     * 删除
+     *
+     * @param id id
+     * @return int
+     */
     @Override
     public int delete(int id) {
-        return jdbcTemplate.update("DELETE from spring_boot_test.table_test where id=?",id);
+        return jdbcTemplate.update("DELETE from spring_boot_test.table_test where id=?", id);
     }
 
-    //根据ID查询
+    /**
+     * 根据ID查询
+     *
+     * @param id id
+     * @return {@link Object}
+     */
     @Override
     public Object findTableById(int id) {
-        List<TableTest> tableTest = jdbcTemplate.query("select * from spring_boot_test.table_test where id=?",new Object[]{id},new BeanPropertyRowMapper(TableTest.class));
-        if(tableTest!=null && tableTest.size()>0){
+        List<TableTest> tableTest = jdbcTemplate.query("select * from spring_boot_test.table_test where id=?", new Object[]{id}, new BeanPropertyRowMapper(TableTest.class));
+        if (tableTest != null && tableTest.size() > 0) {
             TableTest table = tableTest.get(0);
             return table;
-        }else{
+        } else {
             return new JsonResult(0);
         }
 

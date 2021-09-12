@@ -4,33 +4,48 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * User: CalvinHaynes
- * Date: 2021-07-26
- * Time: 23:34
+ * 使用@RestController或@ResponseBody时，可直接返回该对象，
+ * Spring Boot默认使用Jackson会自动将该对象转换为json字符串
+ * 如{"code": 0,"msg": "","data": [{}, {}]}
+ *
+ * @author CalvinHaynes
+ * @date 2021/09/07
  */
-/*
-    使用@RestController或@ResponseBody时，可直接返回该对象，
-    Spring Boot默认使用Jackson会自动将该对象转换为json字符串
-    如{"code": 0,"msg": "","data": [{}, {}]}
- */
-public class JsonResult{
+public class JsonResult {
 
     private int status;
 
+    /**
+     * Instantiates a new Json result.
+     */
     public JsonResult() {
     }
 
+    /**
+     * Instantiates a new Json result.
+     *
+     * @param status the status
+     */
     public JsonResult(int status) {
         this.status = status;
     }
 
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public int getStatus() {
         return status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
     public void setStatus(int status) {
         this.status = status;
     }

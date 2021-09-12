@@ -1,12 +1,15 @@
 package top.calvinhaynes;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 
+/**
+ * Spring代码执行主类
+ *
+ * @author CalvinHaynes
+ * @date 2021/09/07
+ */
 @SpringBootApplication
-//@EnableAutoConfiguration
 public class Demo2JdbcDruidApplication {
 
     public static void main(String[] args) {

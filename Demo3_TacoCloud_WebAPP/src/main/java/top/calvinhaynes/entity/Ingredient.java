@@ -4,11 +4,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 /**
- * Created with IntelliJ IDEA.
- * Description:
- * User: CalvinHaynes
- * Date: 2021-07-28
- * Time: 14:06
+ * @ProjectName: Ingredient
+ * @Author: CalvinHaynes
+ * @Date: 2021/7/30 9:26
+ * @Description: 配料实体类
  */
 @Data
 @RequiredArgsConstructor

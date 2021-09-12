@@ -9,8 +9,6 @@
   <version>1.0-SNAPSHOT</version>
 
   <name>Demo1_HelloWorld</name>
-  <!-- FIXME change it to the project's website -->
-<!--  <url>http://www.example.com</url>-->
 
   <!-- Inherit defaults from Spring Boot -->
   <parent>
@@ -33,6 +31,7 @@
       <scope>test</scope>
     </dependency>
 
+    <!--web项目的依赖：Servlet,Tomcat,Web,WebMVC-->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-web</artifactId>
@@ -42,7 +41,7 @@
   <build>
 
     <plugins>
-<!--      SpringBoot的Maven插件-->
+      <!--SpringBoot的Maven插件-->
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>

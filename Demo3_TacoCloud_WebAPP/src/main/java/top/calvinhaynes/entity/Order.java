@@ -8,11 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 /**
- * Created with IntelliJ IDEA.
- * Description: 订单实体类
- * User: CalvinHaynes
- * Date: 2021-07-28
- * Time: 15:31
+ * @ProjectName: Order
+ * @Author: CalvinHaynes
+ * @Date: 2021/7/30 9:26
+ * @Description: 订单实体类
  */
 @Data
 public class Order {

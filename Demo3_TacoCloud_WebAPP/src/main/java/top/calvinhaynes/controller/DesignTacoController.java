@@ -66,7 +66,7 @@ public class DesignTacoController {
      * Spring Web MVC 控制器中的所有处理方法必须解析为一个逻辑视图名，
      * 显式地（比如返回一个字符串或者 View）或者隐式地（比如基于约定）。
      * Spring 中的视图通过一个逻辑视图名来定位，被一个视图解析器解析。
-     * 视图模板会通过Model的key值（逻辑视图名）定位
+     * 视图模板会通过get请求获取到的Model的key值（逻辑视图名）定位
      *
      * @param: [model]
      * @return: java.lang.String
@@ -79,12 +79,22 @@ public class DesignTacoController {
         return "design";
     }
 
-    @PostMapping
-    //提交设计好的Taco，点击Submit按钮之后的操作
-    public String processDesign(@Valid @ModelAttribute("design") Taco design, Errors errors, Model model) {
 
-        if (errors.hasErrors()) {       //错误处理：直接重新返回design视图
-            return "design";
+    /*
+     * Method Description: 设计完Taco后的处理
+     *
+     * @param: [design, errors, model]
+     *          @Valid @ModelAttribute("design") Taco design：将design视图中的数据放到一个Taco对象design中
+     *                                                        相当于model.addAttribute("design",design)
+     * @return: java.lang.String
+     * @author: CalvinHaynes
+     * @date: 2021/7/29 21:52
+     */
+    @PostMapping
+    public String processDesign(@Valid Taco design, Errors errors) {
+
+        if (errors.hasErrors()) {
+            return "design";        //错误处理：直接重新返回design视图
         }
 
         //提交后的操作，涉及到持久化数据，所以会在下一个Demo中细写
@@ -95,7 +105,7 @@ public class DesignTacoController {
     }
 
     /*
-     * Method Description:
+     * Method Description:  通过配料类型type筛选ingredients列表
      *
      * @param: [ingredients, type]
      * @return: java.util.List<top.calvinhaynes.entity.Ingredient>
