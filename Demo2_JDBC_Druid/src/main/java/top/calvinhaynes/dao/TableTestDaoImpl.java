@@ -8,6 +8,7 @@ import top.calvinhaynes.pojo.TableTest;
 import top.calvinhaynes.utils.JsonResult;
 
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -39,7 +40,7 @@ public class TableTestDaoImpl implements TableTestDao {
      */
     @Override
     public int add(TableTest tableTest) {
-        return jdbcTemplate.update("insert into spring_boot_test.table_test(id, name, level, create_time, delete_flag, extension) values(?, ?, ?, ?, ?, ?)", tableTest.getId(), tableTest.getName(), tableTest.getLevel(), tableTest.getCreate_time(), tableTest.getDelete_flag(), tableTest.getExtension());
+        return jdbcTemplate.update("insert into spring_boot_test.table_test(id, name, level, create_time, delete_flag, extension) values(?, ?, ?, ?, ?, ?)", tableTest.getId(), tableTest.getName(), tableTest.getLevel(), tableTest.getCreateTime(), tableTest.getDeleteFlag(), tableTest.getExtension());
     }
 
     /**
@@ -50,7 +51,7 @@ public class TableTestDaoImpl implements TableTestDao {
      */
     @Override
     public int update(TableTest tableTest) {
-        return jdbcTemplate.update("update spring_boot_test.table_test set name=? ,level=? ,create_time=? ,delete_flag=? ,extension=? where id=?", tableTest.getName(), tableTest.getLevel(), tableTest.getCreate_time(), tableTest.getDelete_flag(), tableTest.getExtension(), tableTest.getId());
+        return jdbcTemplate.update("update spring_boot_test.table_test set name=? ,level=? ,create_time=? ,delete_flag=? ,extension=? where id=?", tableTest.getName(), tableTest.getLevel(), tableTest.getCreateTime(), tableTest.getDeleteFlag(), tableTest.getExtension(), tableTest.getId());
     }
 
     /**

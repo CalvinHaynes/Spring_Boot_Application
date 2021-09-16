@@ -8,9 +8,11 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
 
 /**
+ * The type Order.
+ *
  * @ProjectName: Order
  * @Author: CalvinHaynes
- * @Date: 2021/7/30 9:26
+ * @Date: 2021 /7/30 9:26
  * @Description: 订单实体类
  */
 @Data

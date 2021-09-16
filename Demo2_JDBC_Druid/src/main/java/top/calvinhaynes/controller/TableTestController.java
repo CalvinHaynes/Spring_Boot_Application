@@ -29,6 +29,7 @@ public class TableTestController {
         this.tableTestService = tableTestService;
     }
 
+
     /**
      * 新增表格信息接口
      *
@@ -51,8 +52,8 @@ public class TableTestController {
         tableTest.setId(id);
         tableTest.setName(name);
         tableTest.setLevel(level);
-        tableTest.setCreate_time(createTime);
-        tableTest.setDelete_flag(deleteFlag);
+        tableTest.setCreateTime(createTime);
+        tableTest.setDeleteFlag(deleteFlag);
         tableTest.setExtension(extension);
 
         int status = tableTestService.add(tableTest);
@@ -86,8 +87,8 @@ public class TableTestController {
         TableTest tableTest = new TableTest();
         tableTest.setName(name);
         tableTest.setLevel(level);
-        tableTest.setCreate_time(createTime);
-        tableTest.setDelete_flag(deleteFlag);
+        tableTest.setCreateTime(createTime);
+        tableTest.setDeleteFlag(deleteFlag);
         tableTest.setExtension(extension);
         tableTest.setId(id);
 

@@ -24,13 +24,11 @@ import javax.validation.Valid;
 public class OrderController {
 
 
-    /*
-     * Method Description:  get请求显示订单表单视图页面
+    /**
+     * get请求显示订单表单视图页面
      *
-     * @param: [model]
-     * @return: java.lang.String
-     * @author: CalvinHaynes
-     * @date: 2021/7/29 17:22
+     * @param model 模型
+     * @return {@link String}
      */
     @GetMapping("/current")
     public String orderForm(Model model) {
@@ -39,13 +37,12 @@ public class OrderController {
     }
 
 
-    /*
-     * Method Description:  填完订单之后的操作
+    /**
+     * 填完订单之后的操作
      *
-     * @param: [order, errors]
-     * @return: java.lang.String
-     * @author: CalvinHaynes
-     * @date: 2021/7/29 17:21
+     * @param order  订单
+     * @param errors 错误
+     * @return {@link String}
      */
     @PostMapping
     public String processOrder(@Valid Order order, Errors errors) { //@Valid注解是检验用的

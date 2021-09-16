@@ -1,10 +1,5 @@
 package top.calvinhaynes.utils;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-
 /**
  * 使用@RestController或@ResponseBody时，可直接返回该对象，
  * Spring Boot默认使用Jackson会自动将该对象转换为json字符串

@@ -140,3 +140,5 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
   top.calvinhaynes.config.HelloServiceAutoConfiguration
 ```
 
+**可以看出我们刚才写的Starter对于使用者来说非常方便，除了在POM中引入依赖，不需要其他操作就可以直接使用模块内部的接口注入**
+

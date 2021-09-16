@@ -1,5 +1,12 @@
 {
-  "groups": [],
+  "groups": [
+    {
+      "name": "spring.datasource",
+      "type": "javax.sql.DataSource",
+      "sourceType": "top.calvinhaynes.config.DruidConfig",
+      "sourceMethod": "druidDataSource()"
+    }
+  ],
   "properties": [
     {
       "name": "server.tomcat.max-http-header-size",

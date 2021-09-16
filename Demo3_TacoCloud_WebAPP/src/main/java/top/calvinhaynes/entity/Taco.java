@@ -7,11 +7,11 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
- * Description: Taco实体类
- * User: CalvinHaynes
- * Date: 2021-07-28
- * Time: 14:43
+ * 墨西哥煎玉米卷
+ * Taco实体类
+ *
+ * @author CalvinHaynes
+ * @date 2021/09/16
  */
 @Data
 public class Taco {

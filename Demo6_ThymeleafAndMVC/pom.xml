@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>top.calvinhaynes</groupId>
-    <artifactId>Demo6_Thymeleaf</artifactId>
+    <artifactId>Demo6_ThymeleafAndMVC</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Demo6_Thymeleaf</name>
-    <description>Demo6_Thymeleaf</description>
+    <name>Demo6_ThymeleafAndMVC</name>
+    <description>Demo6_ThymeleafAndMVC</description>
     <properties>
         <java.version>1.8</java.version>
     </properties>
