@@ -1,4 +1,4 @@
-# Thymeleaf使用
+# Thymeleaf和SpringBoot中的MVC
 
 ## 前言
 
@@ -6,7 +6,15 @@ Thymeleaf 是适用于 Web 和独立环境的现代服务器端 Java 模板引�
 
 Thymeleaf 的主要目标是提供一种优雅且高度可维护的模板创建方式。为了实现这一点，它建立在*自然模板*的概念之上，以不影响模板用作设计原型的方式将其逻辑注入模板文件。这改善了设计的沟通并弥合了设计和开发团队之间的差距。（**意思就是在不影响原本HTML文件语法的基础上增添了个插件**）
 
-## 标准表达式语法
+------
+
+SpringBoot中的MVC
+
+The [Spring Web MVC framework](https://docs.spring.io/spring/docs/5.2.4.RELEASE/spring-framework-reference/web.html#mvc) (often referred to as simply “Spring MVC”) is a rich “model view controller” web framework. Spring MVC lets you create special `@Controller` or `@RestController` beans to handle incoming HTTP requests. Methods in your controller are mapped to HTTP by using `@RequestMapping` annotations.
+
+## Thymeleaf
+
+### 1 - 标准表达式语法
 
 - 简单的表达：
   - 变量表达式： `${...}`
@@ -45,7 +53,7 @@ Thymeleaf 的主要目标是提供一种优雅且高度可维护的模板创建�
 'User is of type ' + (${user.isAdmin()} ? 'Administrator' : (${user.type} ?: 'Unknown'))
 ```
 
-## 属性优先级
+### 2 - 属性优先级
 
 当您`th:*`在同一个标签中编写多个属性时会发生什么？例如：
 
@@ -79,7 +87,7 @@ Thymeleaf 的主要目标是提供一种优雅且高度可维护的模板创建�
 </ul>
 ```
 
-## 文本转义问题
+### 3 - 文本转义问题
 
 **未转义的文本**：
 
@@ -108,4 +116,202 @@ home.welcome=Welcome to our <b>fantastic</b> grocery store!
 ```html
 <p>Welcome to our <b>fantastic</b> grocery store!</p>
 ```
+
+## SpringBoot MVC
+
+### ==SpringBoot构建一个完整MVC项目的思路==
+
+![SpringBoot创建一个完整MVC项目的](https://cdn.jsdelivr.net/gh/CalvinHaynes/ImageHub@main/BlogImage/SpringBoot创建一个完整MVC项目的.6a0akl3w7ho0.png)
+
+**官方文档地址**：https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#boot-features-spring-mvc-auto-configuration
+
+### Spring MVC 自动配置
+
+Spring Boot 为 Spring MVC 提供了自动配置，适用于大多数应用程序。
+
+自动配置在 Spring 的默认值之上添加了以下功能：
+
+- 包括`ContentNegotiatingViewResolver`和`BeanNameViewResolver`两个 bean。
+- 支持提供静态资源，包括对 WebJars 的支持
+- 自动注册`Converter`，`GenericConverter`和`Formatter` bean。
+- 支持`HttpMessageConverters`
+- 自动注册`MessageCodesResolver`
+- 静态`index.html`支持。
+- 自定义`Favicon`支持。
+- `ConfigurableWebBindingInitializer`bean 的自动使用。
+
+### SpringMVC在自动配置基础上自定义配置
+
+​		**如果您想保留那些 Spring Boot MVC 自定义并进行更多[MVC 自定义](https://docs.spring.io/spring/docs/5.2.4.RELEASE/spring-framework-reference/web.html#mvc)（拦截器、格式化程序、视图控制器和其他功能），您可以添加自己`@Configuration`的类型类，`WebMvcConfigurer`但不添加 `@EnableWebMvc`.**
+
+#### 自定义视图解析器ViewResolver
+
+##### 1 - **先看看自动配置的ContentNegotiatingViewResolver 内容协商视图解析器**：
+
+ContentNegotiatingViewResolver本身不解析视图，而是委托给其他ViewResolvers，此视图解析器根据请求的媒体类型选择合适的View ，一旦确定了请求的媒体类型，这个解析器就会查询每个委托视图解析器以获得一个View并确定请求的媒体类型是否与视图的内容类型兼容）， 返回最兼容的视图
+
+###### 分析视图解析过程
+
+**resolveViewName方法**
+
+```java
+public View resolveViewName(String viewName, Locale locale) throws Exception {
+    //.........
+    if (requestedMediaTypes != null) {
+        List<View> candidateViews = getCandidateViews(viewName, locale, requestedMediaTypes);
+        View bestView = getBestView(candidateViews, requestedMediaTypes, attrs);
+        if (bestView != null) {
+            return bestView;
+        }
+    }
+}
+```
+
+**getCandidateViews方法**
+
+就是从viewResolvers属性中读取候选的viewResolvers然后返回
+
+```java
+private List<View> getCandidateViews(String viewName, Locale locale, List<MediaType> requestedMediaTypes)
+			throws Exception {
+
+		List<View> candidateViews = new ArrayList<>();
+		if (this.viewResolvers != null) {
+			Assert.state(this.contentNegotiationManager != null, "No ContentNegotiationManager set");
+			for (ViewResolver viewResolver : this.viewResolvers) {
+				View view = viewResolver.resolveViewName(viewName, locale);
+				if (view != null) {
+					candidateViews.add(view);
+				}
+				for (MediaType requestedMediaType : requestedMediaTypes) {
+					List<String> extensions = this.contentNegotiationManager.resolveFileExtensions(requestedMediaType);
+					for (String extension : extensions) {
+						String viewNameWithExtension = viewName + '.' + extension;
+						view = viewResolver.resolveViewName(viewNameWithExtension, locale);
+						if (view != null) {
+							candidateViews.add(view);
+						}
+					}
+				}
+			}
+		}
+		if (!CollectionUtils.isEmpty(this.defaultViews)) {
+			candidateViews.addAll(this.defaultViews);
+		}
+		return candidateViews;
+	}
+```
+
+**getBestView方法**
+
+从候选的viewResolvers中挑出最好的
+
+```java
+@Nullable
+private View getBestView(List<View> candidateViews, List<MediaType> requestedMediaTypes, RequestAttributes attrs) {
+   for (View candidateView : candidateViews) {
+      if (candidateView instanceof SmartView) {
+         SmartView smartView = (SmartView) candidateView;
+         if (smartView.isRedirectView()) {
+            return candidateView;
+         }
+      }
+   }
+   for (MediaType mediaType : requestedMediaTypes) {
+      for (View candidateView : candidateViews) {
+         if (StringUtils.hasText(candidateView.getContentType())) {
+            MediaType candidateContentType = MediaType.parseMediaType(candidateView.getContentType());
+            if (mediaType.isCompatibleWith(candidateContentType)) {
+               mediaType = mediaType.removeQualityValue();
+               if (logger.isDebugEnabled()) {
+                  logger.debug("Selected '" + mediaType + "' given " + requestedMediaTypes);
+               }
+               attrs.setAttribute(View.SELECTED_CONTENT_TYPE, mediaType, RequestAttributes.SCOPE_REQUEST);
+               return candidateView;
+            }
+         }
+      }
+   }
+   return null;
+}
+```
+
+##### 2 - 自定义一个视图解析器并Debug查看
+
+在MVC配置类中：
+
+- 写一个自己的视图解析器静态类（继承ViewResolver接口，重写方法）
+- 将自己写的视图解析器注册到Spring的Bean中
+
+```java
+package top.calvinhaynes.demo6_thymeleaf.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+import java.util.Locale;
+
+/**
+ * mvc配置类
+ *
+ * @author CalvinHaynes
+ * @date 2021/09/16
+ */
+@Configuration
+public class MvcConfig implements WebMvcConfigurer {
+
+    /**
+     * 我的视图解析器注册到 bean 中
+     *
+     * @return {@link ViewResolver}
+     */
+    @Bean
+    public ViewResolver myViewResolver(){
+        return new MyViewResolver();
+    }
+
+    private static class MyViewResolver implements ViewResolver {
+
+        /**
+         * Resolve the given view by name.
+         * <p>Note: To allow for ViewResolver chaining, a ViewResolver should
+         * return {@code null} if a view with the given name is not defined in it.
+         * However, this is not required: Some ViewResolvers will always attempt
+         * to build View objects with the given name, unable to return {@code null}
+         * (rather throwing an exception when View creation failed).
+         *
+         * @param viewName name of the view to resolve
+         * @param locale   the Locale in which to resolve the view.
+         *                 ViewResolvers that support internationalization should respect this.
+         * @return the View object, or {@code null} if not found
+         * (optional, to allow for ViewResolver chaining)
+         * @throws Exception if the view cannot be resolved
+         *                   (typically in case of problems creating an actual View object)
+         */
+        @Override
+        public View resolveViewName(String viewName, Locale locale) throws Exception {
+            return null;
+        }
+    }
+}
+```
+
+###### Debug查看自己的视图解析器
+
+- ==我们给 DispatcherServlet 中的 doDispatch方法 加个断点进行调试一下，因为所有的请求都会走到这个方法中==
+
+![image](https://cdn.jsdelivr.net/gh/CalvinHaynes/ImageHub@main/BlogImage/image.4mu7zj2ml880.png)
+
+- 访问一下http://localhost:8080/，如果你默认设置的是8080端口的话
+
+![image](https://cdn.jsdelivr.net/gh/CalvinHaynes/ImageHub@main/BlogImage/image.b9akwle0gts.png)
+
+- **展开==this==就可以看到==viewResolvers==属性中出现了自定义的视图解析器**
+
+![image](https://cdn.jsdelivr.net/gh/CalvinHaynes/ImageHub@main/BlogImage/image.3cog0jeuxwy0.png)
+
+#### 自定义转换器和格式化器
 
