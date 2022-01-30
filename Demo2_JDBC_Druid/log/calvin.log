@@ -48,3 +48,15 @@
 [DEBUG][22-01-08][druid.sql.Connection]{conn-10003} closed
 [DEBUG][22-01-08][druid.sql.Connection]{conn-10004} closed
 [DEBUG][22-01-08][druid.sql.Connection]{conn-10005} closed
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10001,procId-8} connected
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10002,procId-9} connected
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10003,procId-10} connected
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10004,procId-11} connected
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10005,procId-12} connected
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10005} pool-connect
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10005} pool-recycle
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10001} closed
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10002} closed
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10003} closed
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10004} closed
+[DEBUG][22-01-30][druid.sql.Connection]{conn-10005} closed
