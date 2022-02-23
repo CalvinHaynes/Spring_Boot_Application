@@ -49,7 +49,7 @@ public class DruidConfig {
         //后台管理界面的登录账号
         initParams.put("loginUsername", "CalvinHaynes");
         //后台管理界面的登录密码
-        initParams.put("loginPassword", "412523999");
+        initParams.put("loginPassword", "999999");
 
         //设置后台允许谁来访问，设置allow属性，
         //属性值为localhost时表示只有本机可以访问

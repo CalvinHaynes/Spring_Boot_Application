@@ -60,7 +60,7 @@ spring:
   datasource:   # 外部注入datasource参数
     # 数据源基本配置
     username: root
-    password: 412523chx
+    password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/spring_boot_test?useUnicode=true&characterEncoding=utf8&useSSL=true
     type: com.alibaba.druid.pool.DruidDataSource
@@ -140,7 +140,7 @@ public class DruidConfig {
         //后台管理界面的登录账号
         initParams.put("loginUsername", "CalvinHaynes");
         //后台管理界面的登录密码
-        initParams.put("loginPassword", "412523999");
+        initParams.put("loginPassword", "999999");
 
         //设置后台允许谁来访问，设置allow属性，
         //属性值为localhost时表示只有本机可以访问

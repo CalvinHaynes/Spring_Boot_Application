@@ -41,7 +41,7 @@ SpringBoot整合MyBatis思路图如下：
 spring:
   datasource:
     username: root
-    password: 412523chx
+    password: 123456
     url: jdbc:mysql://localhost:3306/ssmintegration?useUnicode=true&characterEncoding=utf-8&serverTimezone=UTC
     driver-class-name: com.mysql.cj.jdbc.Driver
 
